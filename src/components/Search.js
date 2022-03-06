@@ -10,31 +10,42 @@ const Search = () => {
   };
 
   const handleSearch = async () => {
-    if (term) {
-      const { data } = await axios.get('https://ru.wikipedia.org/w/api.php', {
-        params: {
-          action: 'query',
-          list: 'search',
-          origin: '*',
-          format: 'json',
-          srsearch: term,
-        },
-      });
+    const { data } = await axios.get('https://ru.wikipedia.org/w/api.php', {
+      params: {
+        action: 'query',
+        list: 'search',
+        origin: '*',
+        format: 'json',
+        srsearch: term,
+      },
+    });
 
-      setResults(data.query.search);
-    }
+    setResults(data.query.search);
   };
 
   useEffect(() => {
-    handleSearch();
+    const timerId = setTimeout(() => {
+      if (term) {
+        handleSearch();
+      }
+    }, 1500);
+
+		return () => {
+			clearTimeout(timerId)
+		}
   }, [term]);
 
   const renderedResults = results.map((result) => {
     return (
       <div key={result.pageid} className='item'>
+        <div className='right floated content'>
+          <a href={`https://ru.wikipedia.org/?curid=${result.pageid}`} className='ui button'>
+            Go
+          </a>
+        </div>
         <div className='content'>
           <div className='header'>{result.title}</div>
-					<span dangerouslySetInnerHTML={{__html: result.snippet}}></span>
+          <span dangerouslySetInnerHTML={{ __html: result.snippet }}></span>
         </div>
       </div>
     );
