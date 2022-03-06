@@ -2,33 +2,53 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 const Search = () => {
-	const [term,setTerm] = useState('programming');
+  const [term, setTerm] = useState('');
+  const [results, setResults] = useState([]);
 
-	const handleSearch = async () => {
-		const response = await axios.get('https://en.wikipedia.org/w/api.php',{
-			params: {
-				action: 'query',
-				list: 'search',
-				origin: '*',
-				format: 'json',
-				srsearch: term
-			}
-		})
-		console.log(response)
-	};
+  const handleChangeInput = (event) => {
+    setTerm(event.target.value);
+  };
 
-	useEffect(() => {
-		handleSearch()
-	},[term])
+  const handleSearch = async () => {
+    if (term) {
+      const { data } = await axios.get('https://ru.wikipedia.org/w/api.php', {
+        params: {
+          action: 'query',
+          list: 'search',
+          origin: '*',
+          format: 'json',
+          srsearch: term,
+        },
+      });
+
+      setResults(data.query.search);
+    }
+  };
+
+  useEffect(() => {
+    handleSearch();
+  }, [term]);
+
+  const renderedResults = results.map((result) => {
+    return (
+      <div key={result.pageid} className='item'>
+        <div className='content'>
+          <div className='header'>{result.title}</div>
+					<span dangerouslySetInnerHTML={{__html: result.snippet}}></span>
+        </div>
+      </div>
+    );
+  });
 
   return (
     <div>
       <div className='ui form'>
         <div className='field'>
           <label>Введите текст для поиска</label>
-          <input type='text' className='input' />
+          <input onChange={handleChangeInput} type='text' className='input' />
         </div>
       </div>
+      <div className='ui celled list'>{renderedResults}</div>
     </div>
   );
 };
