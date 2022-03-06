@@ -2,7 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
 const Search = () => {
-  const [term, setTerm] = useState('');
+  const [term, setTerm] = useState('life');
+  const [debouncedTerm, setDebouncedTerm] = useState(term);
   const [results, setResults] = useState([]);
 
   const handleChangeInput = (event) => {
@@ -24,15 +25,15 @@ const Search = () => {
   };
 
   useEffect(() => {
-    const timerId = setTimeout(() => {
-      if (term) {
-        handleSearch();
-      }
-    }, 1500);
+    if (term) handleSearch();
+  }, [debouncedTerm]);
 
-		return () => {
+  useEffect(() => {
+    const timerId = setTimeout(() => setDebouncedTerm(term), 1000);
+
+    return () => {
 			clearTimeout(timerId)
-		}
+		};
   }, [term]);
 
   const renderedResults = results.map((result) => {
@@ -52,7 +53,7 @@ const Search = () => {
   });
 
   return (
-    <div>
+    <div className="ui container">
       <div className='ui form'>
         <div className='field'>
           <label>Введите текст для поиска</label>
