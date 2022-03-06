@@ -28,15 +28,28 @@ const options = [
   {
     label: 'Оттенок синего',
     value: 'blue'
+  },
+  {
+    label: 'Розовый цвет',
+    value: 'pink'
+  },
+  {
+    label: 'Мраморный цвет',
+    value: 'mramori'
+  },
+  {
+    label: 'Голубой цвет',
+    value: 'lightblue'
   }
 ]
 
 export default function App() {
+  const [selected,setSelected] = React.useState(options[0])
   return (
     <div className='ui container'>
-      {/* <Accordion items={items}/> */}
-      {/* <Search /> */}
-      <Dropdown options={options}/>
+      <Dropdown onSelectedChange={setSelected} selected={selected} options={options}/>
+      <Accordion items={items}/>
+      <Search />
     </div>
   );
 }
