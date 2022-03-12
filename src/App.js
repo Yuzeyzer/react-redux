@@ -48,8 +48,8 @@ export default function App() {
   return (
     <div className='ui container'>
       <Dropdown onSelectedChange={setSelected} selected={selected} options={options}/>
-      <Accordion items={items}/>
-      <Search />
+      {/* <Accordion items={items}/> */}
+      {/* <Search /> */}
     </div>
   );
 }

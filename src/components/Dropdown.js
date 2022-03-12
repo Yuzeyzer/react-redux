@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 const Dropdown = ({ options, selected, onSelectedChange }) => {
   const [open, setOpen] = useState(false);
+  const dropdownRef = useRef()
 
   const renderedOptions = options.map((option) => {
     if (option.value === selected.value) {
@@ -14,8 +15,22 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
     );
   });
 
+  const handleCloseOnClickOutside = (event) => {
+    if (!dropdownRef.current.contains(event.target)) {
+      setOpen(false)
+    }
+  }
+
+  useEffect(() => {
+    document.body.addEventListener('click', handleCloseOnClickOutside);
+
+    return () => {
+      document.body.removeEventListener('click', handleCloseOnClickOutside);
+    }
+  },[])
+
   return (
-    <div className='ui form'>
+    <div ref={dropdownRef} className='ui form'>
       <div className='field'>
         <label className='label'>Выберите цвет</label>
         <div
