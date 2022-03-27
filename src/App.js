@@ -2,6 +2,7 @@ import React from 'react';
 import Accordion from './components/Accordion';
 import Dropdown from './components/Dropdown';
 import Search from './components/Search';
+import Translate from './components/Translate';
 
 const items = [
   {
@@ -19,35 +20,36 @@ const items = [
 const options = [
   {
     label: 'Красный цвет',
-    value: 'red'
+    value: 'red',
   },
   {
     label: 'Зеленный цвет',
-    value: 'green'
+    value: 'green',
   },
   {
     label: 'Оттенок синего',
-    value: 'blue'
+    value: 'blue',
   },
   {
     label: 'Розовый цвет',
-    value: 'pink'
+    value: 'pink',
   },
   {
     label: 'Мраморный цвет',
-    value: 'mramori'
+    value: 'mramori',
   },
   {
     label: 'Голубой цвет',
-    value: 'lightblue'
-  }
-]
+    value: 'lightblue',
+  },
+];
 
 export default function App() {
-  const [selected,setSelected] = React.useState(options[0])
+  const [selected, setSelected] = React.useState(options[0]);
   return (
     <div className='ui container'>
-      <Dropdown onSelectedChange={setSelected} selected={selected} options={options}/>
+      <Translate />
+      {/* <Dropdown onSelectedChange={setSelected} selected={selected} options={options} /> */}
       {/* <Accordion items={items}/> */}
       {/* <Search /> */}
     </div>

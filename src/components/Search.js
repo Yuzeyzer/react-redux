@@ -26,6 +26,7 @@ const Search = () => {
 
   useEffect(() => {
     if (term) handleSearch();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedTerm]);
 
   useEffect(() => {
