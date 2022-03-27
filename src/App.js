@@ -1,6 +1,7 @@
 import React from 'react';
 import Accordion from './components/Accordion';
 import Dropdown from './components/Dropdown';
+import Route from './components/Route';
 import Search from './components/Search';
 import Translate from './components/Translate';
 
@@ -44,38 +45,22 @@ const options = [
   },
 ];
 
-const showAccordion = () => {
-  if (window.location.pathname === '/') {
-    return <Accordion items={items} />;
-  }
-};
-
-const showList = () => {
-  if (window.location.pathname === '/search') {
-    return <Search />;
-  }
-};
-
-const showDropdown = (selected, setSelected) => {
-  if (window.location.pathname === '/dropdown') {
-    return <Dropdown onSelectedChange={setSelected} selected={selected} options={options} />;
-  }
-};
-
-const showTranslate = () => {
-  if (window.location.pathname === '/translate') {
-    return <Translate />;
-  }
-};
-
 export default function App() {
   const [selected, setSelected] = React.useState(options[0]);
   return (
     <div className='ui container'>
-      {showAccordion()}
-      {showDropdown(selected, setSelected)}
-      {showList()}
-      {showTranslate()}
+      <Route path='/'>
+        <Accordion items={items} />
+      </Route>
+      <Route path='/search'>
+        <Search />
+      </Route>
+      <Route path='/dropdown'>
+        <Dropdown onSelectedChange={setSelected} selected={selected} options={options} />
+      </Route>
+      <Route path='/translate'>
+        <Translate />
+      </Route>
     </div>
   );
 }
