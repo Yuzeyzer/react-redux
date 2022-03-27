@@ -3,7 +3,8 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 
 const Convert = ({ language, text }) => {
-  const [translated, setTranslated] = useState();
+  const [translated, setTranslated] = useState('');
+  const [debouncedText, setDebouncedText] = useState('');
 
   const getTranslatedWord = async () => {
     const {
@@ -13,7 +14,7 @@ const Convert = ({ language, text }) => {
       {},
       {
         params: {
-          q: text,
+          q: debouncedText,
           target: language.value,
           key: 'AIzaSyCHUCmpR7cT_yDFHC98CZJy2LTms-IwDlM',
         },
@@ -21,9 +22,20 @@ const Convert = ({ language, text }) => {
     );
     setTranslated(data.translations[0].translatedText);
   };
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedText(text);
+    }, 2000);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [text]);
+
   useEffect(() => {
     getTranslatedWord();
-  }, [language, text]);
+  }, [language, debouncedText]);
 
   return (
     <div>
