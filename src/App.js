@@ -44,14 +44,38 @@ const options = [
   },
 ];
 
+const showAccordion = () => {
+  if (window.location.pathname === '/') {
+    return <Accordion items={items} />;
+  }
+};
+
+const showList = () => {
+  if (window.location.pathname === '/search') {
+    return <Search />;
+  }
+};
+
+const showDropdown = (selected, setSelected) => {
+  if (window.location.pathname === '/dropdown') {
+    return <Dropdown onSelectedChange={setSelected} selected={selected} options={options} />;
+  }
+};
+
+const showTranslate = () => {
+  if (window.location.pathname === '/translate') {
+    return <Translate />;
+  }
+};
+
 export default function App() {
   const [selected, setSelected] = React.useState(options[0]);
   return (
     <div className='ui container'>
-      <Translate />
-      {/* <Dropdown onSelectedChange={setSelected} selected={selected} options={options} /> */}
-      {/* <Accordion items={items}/> */}
-      {/* <Search /> */}
+      {showAccordion()}
+      {showDropdown(selected, setSelected)}
+      {showList()}
+      {showTranslate()}
     </div>
   );
 }
