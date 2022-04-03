@@ -71,9 +71,10 @@ function App() {
         setMatchedCards();
         resetTurn();
       } else {
-        resetTurn();
+        setTimeout(resetTurn, 1000);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [choiceOne, choiceTwo]);
 
   return (
@@ -84,7 +85,12 @@ function App() {
       <div className="card-grid">
         {cards.length &&
           cards.map((card) => (
-            <SingleCard handleChoice={handleChoice} key={card.id} {...card} />
+            <SingleCard
+              flipped={card === choiceOne || card === choiceTwo || card.matched}
+              handleChoice={handleChoice}
+              key={card.id}
+              card={card}
+            />
           ))}
       </div>
     </div>
