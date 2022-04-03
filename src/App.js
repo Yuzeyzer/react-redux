@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import SingleCard from "./components/SingleCard/SingleCard";
 
@@ -41,6 +41,24 @@ function App() {
   const handleChoice = (card) => {
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
+
+  const resetTurn = () => {
+    setChoiceOne(null);
+    setChoiceTwo(null);
+    setTurns((prev) => prev + 1);
+  };
+
+  useEffect(() => {
+    if (choiceOne && choiceTwo) {
+      if (choiceOne.src === choiceTwo.src) {
+        console.log('Карты одинаковы!')
+        resetTurn();
+      } else {
+        console.log('Карты Разные!')
+        resetTurn();
+      }
+    }
+  }, [choiceOne, choiceTwo]);
 
   return (
     <div className="App">
