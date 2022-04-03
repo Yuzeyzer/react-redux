@@ -1,11 +1,12 @@
-import React from "react";
+import './App.css'
 
-import './style.css'
-
-export default function App() {
+function App() {
   return (
-    <div>
-      <h1 className="title">Привет Чунбурунчупмеки!</h1>
+    <div className="App">
+      <h1>Magic Match</h1>
+      <button>New Game</button>
     </div>
   );
 }
+
+export default App
