@@ -5,21 +5,27 @@ import SingleCard from "./components/SingleCard/SingleCard";
 const cardImages = [
   {
     src: "/img/helmet-1.png",
+    matched: false,
   },
   {
     src: "/img/potion-1.png",
+    matched: false,
   },
   {
     src: "/img/ring-1.png",
+    matched: false,
   },
   {
     src: "/img/scroll-1.png",
+    matched: false,
   },
   {
     src: "/img/shield-1.png",
+    matched: false,
   },
   {
     src: "/img/sword-1.png",
+    matched: false,
   },
 ];
 
@@ -48,13 +54,23 @@ function App() {
     setTurns((prev) => prev + 1);
   };
 
+  const setMatchedCards = () => {
+    setCards((prev) =>
+      prev.map((card) => {
+        if (card.src === choiceOne.src) {
+          return { ...card, matched: true };
+        }
+        return card;
+      })
+    );
+  };
+
   useEffect(() => {
     if (choiceOne && choiceTwo) {
       if (choiceOne.src === choiceTwo.src) {
-        console.log('Карты одинаковы!')
+        setMatchedCards();
         resetTurn();
       } else {
-        console.log('Карты Разные!')
         resetTurn();
       }
     }
