@@ -1,9 +1,11 @@
 import React from "react";
 import "./style.css";
 
-const SingleCard = ({ card,handleChoice,  flipped }) => {
+const SingleCard = ({ card,handleChoice,  flipped,disabled }) => {
   const handleClick = () => {
-    handleChoice(card);
+    if (!disabled) {
+      handleChoice(card);
+    }
   };
   return (
     <div className="card">
