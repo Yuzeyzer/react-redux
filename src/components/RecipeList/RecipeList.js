@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import "./style.css";
 
 const RecipeList = ({ recipes }) => {
+  if (!recipes.length) {
+    return <p className="error">Нет рецептов...</p>;
+  }
+
   return (
     <div className="recipe-list">
       {recipes.map((recipe) => (
