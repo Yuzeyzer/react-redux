@@ -9,10 +9,21 @@ const Recipe = () => {
   const { data: recipe, isPending, error } = useFetch(url);
 
   return (
-    <div>
+    <div className="recipe">
       {error && <p className="error">{error}</p>}
       {isPending && <p className="loading">Loading...</p>}
-      {recipe && <h1>{recipe.title}</h1>}
+      {recipe && (
+        <>
+          <h2 className="page">{recipe.title}</h2>
+          <p>Требуется {recipe.cookingTime} для готовки</p>
+          <ul>
+            {recipe.ingredients.map((ingredient) => (
+              <li key={ingredient}>{ingredient}</li>
+            ))}
+          </ul>
+          <p className="method">{recipe.method}</p>
+        </>
+      )}
     </div>
   );
 };
