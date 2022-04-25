@@ -4,7 +4,7 @@ import { useFetch } from "../../hooks/useFetch";
 import "./style.css";
 
 const Home = () => {
-  const { data, isPending, error } = useFetch("http://localhost:3000/recipes");
+  const { data, isPending, error } = useFetch("http://localhost:3001/recipes");
 
   return (
     <div className="home">
